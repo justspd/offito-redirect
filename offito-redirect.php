@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Offito Redirect
  * Plugin URI:        https://github.com/justspd/offito-redirect
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Redirects Offito specific links to subdomain. This plugin is useful if your Offito is hosted on subdomain.
  * Version:           1.0.0
  * Author:            Tomáš Tyleček
  * Author URI:        https://www.offito.com

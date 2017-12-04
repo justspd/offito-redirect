@@ -51,6 +51,7 @@ class Offito_Redirect_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		$this->offito_options = get_option($this->plugin_name);
 
 	}
 
@@ -98,6 +99,43 @@ class Offito_Redirect_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/offito-redirect-public.js', array( 'jquery' ), $this->version, false );
 
+	}
+
+	private function startsWith($haystack, $needle)
+	{
+     $length = strlen($needle);
+     return (substr($haystack, 0, $length) === $needle);
+	}
+
+	public function offito_redirect() {
+		if($this->offito_options['subdomain']){
+			$subdomain = $this->offito_options['subdomain'];
+			$redirectURL = "";
+			$shouldRedirect = false;
+
+			$uri = $_SERVER['REQUEST_URI'];
+
+			$toTest = array(
+				'/confirm/',
+				'/recovery/',
+				'/s/',
+				'/recoverysubmit',
+				'/reminder/',
+			);
+
+			foreach ($toTest as $value) {
+				if ($this->startsWith($uri, $value)) {
+					$shouldRedirect = true;
+					$redirectURL = sprintf("%s%s", $subdomain, $uri);
+					break;
+				}
+			}
+
+			if ($shouldRedirect) {
+				wp_redirect( $redirectURL, 302 );
+				exit();
+			}
+		}
 	}
 
 }
