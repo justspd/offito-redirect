@@ -107,6 +107,16 @@ class Offito_Redirect_Public {
      return (substr($haystack, 0, $length) === $needle);
 	}
 
+	public function offito_redirect_short() {
+		$uri = $_SERVER['REQUEST_URI'];
+
+		if (is_404()) {
+			$subdomain = $this->offito_options['subdomain'];
+			wp_redirect(sprintf("%s%s", $subdomain, $uri), 302 );
+			exit();
+		}
+	}
+
 	public function offito_redirect() {
 		if($this->offito_options['subdomain']){
 			$subdomain = $this->offito_options['subdomain'];
